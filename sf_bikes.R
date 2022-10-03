@@ -72,3 +72,15 @@ for (x in 1:nrow(top10)) {
 
 ggmap(SanFran) +
   geom_path(aes(x = lon, y = lat, color = as.factor(ID)), size = 0.5, data = tmp, lineend = "round")
+
+load("./data/All_Flows.Rdata")
+ggmap(SanFran,darken = 0.8) +
+  geom_path(aes(x = lon, y = lat, group = ID,colour = All_Flows$Trips), data = All_Flows, size = All_Flows$Trips/1000) +
+  scale_colour_gradient(low="#900C3F", high="#FFC300",name="Trips") +
+  geom_point(data=stations, aes(long, lat),colour="red") +
+  geom_text(data = stations,aes(x = long, y = lat, label = station_id), check_overlap = TRUE, colour="#FFFFFF",hjust=-0.6) +
+  theme (
+    axis.text = element_blank (), 
+    axis.title = element_blank (),
+    axis.ticks = element_blank ()
+  )
